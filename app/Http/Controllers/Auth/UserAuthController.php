@@ -3,45 +3,38 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Http\Repositories\UserRepository;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
+use App\Traits\ApiResponse;
 
 class UserAuthController extends Controller
 {
-    public function register(Request $request)
+    use ApiResponse;
+    private $userRepository;
+
+    public function __construct(UserRepository $userRepo)
     {
-        $data = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required'
-        ]);
-
-        return $request;
-
-        $data['password'] = bcrypt($request->password);
-
-        $user = User::create($data);
-
-        $token = $user->createToken('API Token')->accessToken;
-
-        return response([ 'user' => $user, 'token' => $token]);
+        $this->userRepository = $userRepo;
     }
 
-    public function login(Request $request)
+    public function register(Request $request)
     {
-        $data = $request->validate([
-            'email' => 'email|required',
-            'password' => 'required'
-        ]);
+        try {
+            $request->validate([
+                'name' => 'required|string|min:3|max:50',
+                'email' => 'required|string|email|unique:users',
+                'password' => 'required|string|min:6',
+                'confirm_password' => 'required|string|same:password',
+            ]);
 
-        if (!auth()->attempt($data)) {
-            return response(['error_message' => 'Incorrect Details. 
-            Please try again']);
+            $user = $this->userRepository->create($request->name, $request->email, $request->password);
+    
+            return $this->sendResponse($user, 'Registration successful');
+
+        } catch (ValidationException $e) {
+            $errors = $e->errors();
+            return $this->sendError('Validation Error', $errors, 422);
         }
-
-        $token = auth()->user()->createToken('API Token')->accessToken;
-
-        return response(['user' => auth()->user(), 'token' => $token]);
-
     }
 }
