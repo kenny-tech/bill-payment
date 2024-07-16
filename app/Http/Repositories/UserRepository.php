@@ -16,10 +16,13 @@ class UserRepository
      */
     public function create(string $name, string $email, string $password) : object
     {
+        $token = rand(111111,999999);
+
         $user = new User();
         $user->name = $name;
         $user->email = $email;
         $user->password = $password;
+        $user->email_token = $token;
 
         $user->save();
 
