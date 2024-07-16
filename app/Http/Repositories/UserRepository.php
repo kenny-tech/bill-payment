@@ -19,7 +19,7 @@ class UserRepository
         $user = new User();
         $user->name = $name;
         $user->email = $email;
-        $user->password = $password;
+        $user->password = bcrypt($password);
 
         $user->save();
 
