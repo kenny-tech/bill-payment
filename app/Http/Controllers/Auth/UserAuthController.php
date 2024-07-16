@@ -30,11 +30,13 @@ class UserAuthController extends Controller
 
             $user = $this->userRepository->create($request->name, $request->email, $request->password);
     
-            return $this->sendResponse($user, 'Registration successful. Please use the token in the response to activate your account');
+            return $this->sendResponse($user, 'Registration successful');
 
         } catch (ValidationException $e) {
             $errors = $e->errors();
             return $this->sendError('Validation Error', $errors, 422);
         }
     }
+
+   
 }
