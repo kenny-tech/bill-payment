@@ -17,7 +17,10 @@ API DOCUMENTATION
 
 base_url = http://localhost:8000/api
 
-Register - {{base_url}}/register
+
+REGISTER 
+
+Endpoint: {{base_url}}/register
 
 Method: POST
 
@@ -31,7 +34,9 @@ Request body:
 }
 
 
-Login - {{base_url}}/login
+LOGIN 
+
+Endpoint: {{base_url}}/login
 
 Method: POST
 
@@ -43,7 +48,9 @@ Request body:
 }
 
 
-Create Transaction - {{base_url}}/user/create-transaction
+CREATE TRANSACTION
+
+Endpoint: {{base_url}}/user/create-transaction
 
 Method: POST
 
@@ -58,14 +65,18 @@ Request body:
 Header: Bearer Token
 
 
-Get Transactions - {{base_url}}/user/get-transactions 
+GET TRANSACTIONS 
+
+Endpoint: {{base_url}}/user/get-transactions 
 
 Method: GET
 
 Header: Bearer Token
 
 
-Update Transaction - {{base_url}}/user/update-transaction/4
+UPDATE TRANSACTIONS 
+
+Endpoint: {{base_url}}/user/update-transaction/4
 
 Method: PUT
 
@@ -80,7 +91,9 @@ Request body:
 Header: Bearer Token
 
 
-Delete Transaction - {{base_url}}/user/delete_transaction/4
+DELETE TRANSACTIONS 
+
+Endpoint: {{base_url}}/user/delete_transaction/4
 
 Method: DELETE
 
